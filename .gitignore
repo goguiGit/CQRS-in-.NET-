@@ -52,3 +52,7 @@ CodeCoverage/
 *.VisualState.xml
 TestResult.xml
 nunit-*.xml
+.vs/Dotnet.CQRS.slnx/FileContentIndex
+.vs/Dotnet.CQRS.slnx/DesignTimeBuild
+.vs/Dotnet.CQRS.slnx/v18
+.vs/Dotnet.CQRS/CopilotIndices

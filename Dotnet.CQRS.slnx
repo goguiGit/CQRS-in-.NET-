@@ -1,0 +1,17 @@
+<Solution>
+  <Folder Name="/00- Libreries/" />
+  <Folder Name="/00- Libreries/Cortex.Mediator/" />
+  <Folder Name="/00- Libreries/MediatR/">
+    <Project Path="src/Dotnet.CQRS.MediatR.Abstractions/Dotnet.CQRS.MediatR.Abstractions.csproj" Id="37df1a85-7fc6-4dfd-b346-942398ff4756" />
+  </Folder>
+  <Folder Name="/01- Presentations/">
+    <Project Path="src/Dotnet.CQRS.API/Dotnet.CQRS.API.csproj" Id="8b2bbc82-0505-4fc4-93ea-7d2224999b9a" />
+  </Folder>
+  <Folder Name="/02- Core/">
+    <Project Path="src/Dotnet.CQRS.Application/Dotnet.CQRS.Application.csproj" Id="a99f26eb-ea0c-45cb-bfae-a6e3bf0a7dd1" />
+    <Project Path="src/Dotnet.CQRS.Domain/Dotnet.CQRS.Domain.csproj" Id="f6541484-cb60-49a5-8ccd-33390114e456" />
+  </Folder>
+  <Folder Name="/03- Infrastructure/">
+    <Project Path="src/Dotnet.CQRS.Infrastructure/Dotnet.CQRS.Infrastructure.csproj" Id="d4625919-2d70-4d86-ab06-8f13956314b9" />
+  </Folder>
+</Solution>
