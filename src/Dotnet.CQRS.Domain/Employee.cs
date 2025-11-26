@@ -60,5 +60,5 @@ public class Employee : EntityBase
         IsActive = true;
     }
 
-    public string GetFullName() => $"{FirstName} {LastName}";
+    public string FullName => $"{FirstName} {LastName}";
 }

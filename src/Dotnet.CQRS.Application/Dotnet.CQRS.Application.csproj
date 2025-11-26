@@ -8,15 +8,16 @@
 
   <ItemGroup>
     <Folder Include="Employees\Queries\GetAll\" />
-    <Folder Include="Employees\Queries\GetById\" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Ardalis.Specification" Version="9.3.1" />
+    <PackageReference Include="FluentValidation.AspNetCore" Version="11.3.1" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Dotnet.CQRS.Domain\Dotnet.CQRS.Domain.csproj" />
+    <ProjectReference Include="..\Dotnet.CQRS.MediatR.Abstractions\Dotnet.CQRS.MediatR.Abstractions.csproj" />
   </ItemGroup>
 
 </Project>

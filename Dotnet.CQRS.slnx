@@ -3,6 +3,7 @@
   <Folder Name="/00- Libreries/Cortex.Mediator/" />
   <Folder Name="/00- Libreries/MediatR/">
     <Project Path="src/Dotnet.CQRS.MediatR.Abstractions/Dotnet.CQRS.MediatR.Abstractions.csproj" Id="37df1a85-7fc6-4dfd-b346-942398ff4756" />
+    <Project Path="src/Dotnet.CQRS.MediatR.Behaviors/Dotnet.CQRS.MediatR.Behaviors.csproj" Id="e32a2c04-e3c6-4e27-b36d-342824e7b2f5" />
   </Folder>
   <Folder Name="/01- Presentations/">
     <Project Path="src/Dotnet.CQRS.API/Dotnet.CQRS.API.csproj" Id="8b2bbc82-0505-4fc4-93ea-7d2224999b9a" />

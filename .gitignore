@@ -56,3 +56,5 @@ nunit-*.xml
 .vs/Dotnet.CQRS.slnx/DesignTimeBuild
 .vs/Dotnet.CQRS.slnx/v18
 .vs/Dotnet.CQRS/CopilotIndices
+.vs/Dotnet.CQRS.slnx/copilot-chat
+.vs/ProjectEvaluation
