@@ -1,21 +1,14 @@
-using Dotnet.CQRS.Domain;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
 namespace Dotnet.CQRS.Infrastructure.Data;
 
-public class ApplicationDbContextInitializer
+public class ApplicationDbContextInitializer(
+    ApplicationDbContext context,
+    ILogger<ApplicationDbContextInitializer> logger)
 {
-    private readonly ApplicationDbContext _context;
-    private readonly ILogger<ApplicationDbContextInitializer> _logger;
-
-    public ApplicationDbContextInitializer(
-        ApplicationDbContext context,
-        ILogger<ApplicationDbContextInitializer> logger)
-    {
-        _context = context;
-        _logger = logger;
-    }
+    private readonly ApplicationDbContext _context = context ?? throw new ArgumentNullException(nameof(context));
+    private readonly ILogger<ApplicationDbContextInitializer> _logger = logger ?? throw new ArgumentNullException(nameof(logger));
 
     public async Task InitializeAsync()
     {
