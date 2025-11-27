@@ -8,11 +8,13 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="10.0.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="10.0.0" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Dotnet.CQRS.Application\Dotnet.CQRS.Application.csproj" />
     <ProjectReference Include="..\Dotnet.CQRS.Infrastructure\Dotnet.CQRS.Infrastructure.csproj" />
+    <ProjectReference Include="..\Dotnet.CQRS.MediatR.Behaviors\Dotnet.CQRS.MediatR.Behaviors.csproj" />
   </ItemGroup>
 
 </Project>

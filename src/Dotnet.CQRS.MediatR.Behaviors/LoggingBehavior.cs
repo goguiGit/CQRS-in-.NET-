@@ -1,8 +1,7 @@
 ﻿using MediatR;
 using Microsoft.Extensions.Logging;
 using System.Diagnostics;
-using System.Net;
-using Dotnet.CQRS.MediatR.Abstractions.Authorization;
+using Dotnet.CQRS.MediatR.Abstractions.Logging;
 
 namespace Dotnet.CQRS.MediatR.Behaviors;
 
@@ -17,6 +16,12 @@ public class LoggingBehavior<TRequest, TResponse>(
         RequestHandlerDelegate<TResponse> next,
         CancellationToken cancellationToken)
     {
+
+        if (request is not ILoggerRequest)
+        {
+            return await next(cancellationToken);
+        }
+        
         var requestName = typeof(TRequest).Name;
         var stopwatch = Stopwatch.StartNew();
 
@@ -45,24 +50,4 @@ public class LoggingBehavior<TRequest, TResponse>(
             throw;
         }
     }
-}
-
-public class RequestPermissionCheckerBehavior<TRequest, TResponse>(
-    IEnumerable<IRequestPermissionChecker<TRequest>> permissionCheckers)
-    : IPipelineBehavior<TRequest, TResponse>
-    where TResponse : notnull
-    where TRequest : notnull
-{
-    public async Task<TResponse> Handle(TRequest request,
-        RequestHandlerDelegate<TResponse> next, CancellationToken cancellationToken)
-    {
-        foreach (var permissionChecker in permissionCheckers)
-        {
-            await permissionChecker.AuthorizeAsync(request, cancellationToken);
-            
-        }
-
-        return await next(cancellationToken);
-    }
-
 }
