@@ -60,3 +60,4 @@ nunit-*.xml
 .vs/ProjectEvaluation
 .vs/CopilotSnapshots
 .vs
+Dotnet.CQRS.sln.DotSettings.user
