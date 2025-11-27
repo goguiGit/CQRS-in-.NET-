@@ -15,4 +15,7 @@
   <Folder Name="/03- Infrastructure/">
     <Project Path="src/Dotnet.CQRS.Infrastructure/Dotnet.CQRS.Infrastructure.csproj" Id="d4625919-2d70-4d86-ab06-8f13956314b9" />
   </Folder>
+  <Folder Name="/04- Tests/">
+    <Project Path="tests/Dotnet.CQRS.Application.Tests/Dotnet.CQRS.Application.Tests.csproj" Id="22244dbb-fae2-4a87-85e5-921eb2a5cd78" />
+  </Folder>
 </Solution>
