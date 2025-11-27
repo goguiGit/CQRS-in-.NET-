@@ -16,6 +16,12 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseAuthorization();
+// Swagger API doc
+app.UseSwagger();
+app.UseSwaggerUI(c =>
+{
+    c.SwaggerEndpoint("v1/swagger.json", "Dotnet.CQRS.API v1");
+});
 
 app.MapControllers();
 

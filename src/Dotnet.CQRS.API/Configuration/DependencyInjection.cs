@@ -5,6 +5,7 @@ using Dotnet.CQRS.MediatR.Behaviors.Configuration;
 using FluentValidation;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.OpenApi;
 
 namespace Dotnet.CQRS.API.Configuration;
 
@@ -44,7 +45,22 @@ public static class DependencyInjection
     {
         services.AddControllers();
         services.AddEndpointsApiExplorer();
+        services.AddConfigureSwagger();
 
+        return services;
+    }
+
+    public static IServiceCollection AddConfigureSwagger(this IServiceCollection services)
+    {
+        // Swagger documentation API
+        services.AddSwaggerGen(c =>
+        {
+            c.SwaggerDoc("v1", new OpenApiInfo { Title = "Dotnet.CQRS.API", Version = "v1"});
+            c.CustomSchemaIds(type => type.ToString());
+           
+            c.DescribeAllParametersInCamelCase();
+
+        });
 
         return services;
     }
