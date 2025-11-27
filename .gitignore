@@ -58,3 +58,5 @@ nunit-*.xml
 .vs/Dotnet.CQRS/CopilotIndices
 .vs/Dotnet.CQRS.slnx/copilot-chat
 .vs/ProjectEvaluation
+.vs/CopilotSnapshots
+.vs

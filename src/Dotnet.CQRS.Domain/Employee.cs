@@ -6,13 +6,11 @@ public class Employee : EntityBase
     public string FirstName { get; set; }
     public string LastName { get; set; }
     public string Email { get; set; }
-    public DateTime HireDate { get; set; }
-    public decimal Salary { get; set; }
     public bool IsActive { get; set; }
 
     private Employee() { } // EF Core or serialization
 
-    public Employee(string firstName, string lastName, string email, DateTime hireDate, decimal salary)
+    public Employee(string firstName, string lastName, string email)
     {
         if (string.IsNullOrWhiteSpace(firstName))
             throw new ArgumentException("First name cannot be empty.");
@@ -23,14 +21,9 @@ public class Employee : EntityBase
         if (string.IsNullOrWhiteSpace(email))
             throw new ArgumentException("Email cannot be empty.");
 
-        if (salary <= 0)
-            throw new ArgumentException("Salary must be greater than zero.");
-
         FirstName = firstName;
         LastName = lastName;
         Email = email;
-        HireDate = hireDate;
-        Salary = salary;
         IsActive = true;
     }
 
@@ -42,13 +35,6 @@ public class Employee : EntityBase
         Email = newEmail;
     }
 
-    public void UpdateSalary(decimal newSalary)
-    {
-        if (newSalary <= 0)
-            throw new ArgumentException("Salary must be greater than zero.");
-
-        Salary = newSalary;
-    }
 
     public void Deactivate()
     {

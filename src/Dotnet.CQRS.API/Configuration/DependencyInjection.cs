@@ -1,11 +1,6 @@
-﻿using Dotnet.CQRS.Application.Employees.Queries.GetById;
-using Dotnet.CQRS.Infrastructure;
-using Dotnet.CQRS.MediatR.Behaviors;
-using Dotnet.CQRS.MediatR.Behaviors.Configuration;
-using FluentValidation;
-using MediatR;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi;
+using Dotnet.CQRS.Infrastructure.Data;
 
 namespace Dotnet.CQRS.API.Configuration;
 
@@ -15,9 +10,17 @@ public static class DependencyInjection
         this IServiceCollection services,
         IConfiguration configuration)
     {
-        services
-            .AddDbContext<ApplicationDbContext>(options => options
-                .UseInMemoryDatabase(databaseName: "DbTests"));
+        services.AddDbContext<ApplicationDbContext>(options =>
+        {
+            options.UseInMemoryDatabase(databaseName: "DbTests");
+
+            // IMPORTANTE: Habilita validaciones de modelo con InMemory
+            options.EnableSensitiveDataLogging();
+            options.EnableDetailedErrors();
+        });
+
+        services.AddScoped<IEmployeeRepository, EmployeeRepository>();
+        services.AddScoped<ApplicationDbContextInitializer>();
 
         return services;
     }
@@ -25,16 +28,13 @@ public static class DependencyInjection
     public static IServiceCollection AddApplicationServices(this IServiceCollection services)
     {
         var assembly = typeof(GetByIdQuery).Assembly;
-        services.AddMediatR(cfg =>
-        {
-            cfg.RegisterServicesFromAssembly(assembly);
-        });
+        services.AddMediatR(cfg => { cfg.RegisterServicesFromAssembly(assembly); });
 
         services.AddTransient(typeof(IPipelineBehavior<,>), typeof(LoggingBehavior<,>));
 
         services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));
         services.AddValidatorsFromAssembly(assembly);
-        
+
         services.AddTransient(typeof(IPipelineBehavior<,>), typeof(RequestPermissionCheckerBehavior<,>));
         services.AddRequestPermissionFromAssembly(assembly);
 
@@ -55,11 +55,10 @@ public static class DependencyInjection
         // Swagger documentation API
         services.AddSwaggerGen(c =>
         {
-            c.SwaggerDoc("v1", new OpenApiInfo { Title = "Dotnet.CQRS.API", Version = "v1"});
+            c.SwaggerDoc("v1", new OpenApiInfo { Title = "Dotnet.CQRS.API", Version = "v1" });
             c.CustomSchemaIds(type => type.ToString());
-           
-            c.DescribeAllParametersInCamelCase();
 
+            c.DescribeAllParametersInCamelCase();
         });
 
         return services;

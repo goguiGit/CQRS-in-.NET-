@@ -11,6 +11,11 @@ public class GetByIdQueryHandler(IEmployeeRepository employeeRepository) : IQuer
     {
         var employee = await _employeeRepository.SingleOrDefaultAsync(e => e.Id == request.Id);
 
+        if (employee is null)
+        {
+            throw new KeyNotFoundException($"Employee with ID {request.Id} not found.");
+        }
+
         return new GetByIdResponse(employee.Id, employee.FullName, employee.Email);
     }
 }
