@@ -26,11 +26,6 @@ public abstract class RepositoryBase<TEntity, TKey> : IRepository<TEntity, TKey>
         Context.Set<TEntity>().AddRange(entities);
     }
 
-    public virtual async Task<TEntity> FindAsync(TKey id)
-    {
-        return await Context.Set<TEntity>().FindAsync(id);
-    }
-
     public async Task<IEnumerable<TEntity>> GetAllAsync()
     {
         return await Context.Set<TEntity>().ToListAsync();
@@ -64,11 +59,11 @@ public abstract class RepositoryBase<TEntity, TKey> : IRepository<TEntity, TKey>
 
     public Task<TEntity> SingleAsync(ISpecification<TEntity> specification) => Where(specification).SingleAsync();
 
-    public Task<TEntity> SingleOrDefaultAsync(Expression<Func<TEntity, bool>> criteria) => Where(criteria).SingleOrDefaultAsync();
+    public Task<TEntity?> SingleOrDefaultAsync(Expression<Func<TEntity, bool>> criteria) => Where(criteria).SingleOrDefaultAsync()!;
 
-    public Task<TEntity> SingleOrDefaultAsync(ISpecification<TEntity> specification) => Where(specification).SingleOrDefaultAsync();
+    public Task<TEntity?> SingleOrDefaultAsync(ISpecification<TEntity> specification) => Where(specification).SingleOrDefaultAsync()!;
 
-    public Task<TResult> SingleOrDefaultAsync<TResult>(ISpecification<TEntity, TResult> specification) where TResult : class
+    public Task<TResult?> SingleOrDefaultAsync<TResult>(ISpecification<TEntity, TResult> specification) where TResult : class
     {
         var evaluator = new SpecificationEvaluator();
         var query = evaluator.GetQuery(Context.Set<TEntity>().AsQueryable(), specification);

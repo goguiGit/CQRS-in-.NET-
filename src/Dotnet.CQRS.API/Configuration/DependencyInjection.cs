@@ -1,6 +1,10 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System.Net;
+using Ardalis.Result;
+using Ardalis.Result.AspNetCore;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi;
 using Dotnet.CQRS.Infrastructure.Data;
+using Dotnet.CQRS.MediatR.EntityFrameworkCore.Configuration;
 
 namespace Dotnet.CQRS.API.Configuration;
 
@@ -38,12 +42,23 @@ public static class DependencyInjection
         services.AddTransient(typeof(IPipelineBehavior<,>), typeof(RequestPermissionCheckerBehavior<,>));
         services.AddRequestPermissionFromAssembly(assembly);
 
+        services.AddTransactionBehavior<ApplicationDbContext>();
+
         return services;
     }
 
     public static IServiceCollection AddApiServices(this IServiceCollection services)
     {
-        services.AddControllers();
+        services.AddControllers(mvcOptions => mvcOptions
+            .AddResultConvention(resultStatusMap => resultStatusMap
+                .AddDefaultMap()
+                .For(ResultStatus.Ok, HttpStatusCode.OK, resultStatusOptions => resultStatusOptions
+                    .For("POST", HttpStatusCode.Created)
+                    .For("DELETE", HttpStatusCode.NoContent))
+                .Remove(ResultStatus.Forbidden)
+                .Remove(ResultStatus.Unauthorized)
+            ));
+
         services.AddEndpointsApiExplorer();
         services.AddConfigureSwagger();
 

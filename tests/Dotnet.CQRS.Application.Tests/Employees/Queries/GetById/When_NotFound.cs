@@ -1,16 +1,16 @@
-﻿using AutoFixture;
+﻿using System.Linq.Expressions;
+using Ardalis.Result;
+using AutoFixture;
 using AutoFixture.AutoMoq;
 using Dotnet.CQRS.Application.Employees.Queries.GetById;
 using Dotnet.CQRS.Application.Repositories;
-using Moq;
-using System.Linq.Expressions;
-using Ardalis.Result;
 using Dotnet.CQRS.Domain;
+using Moq;
 using Shouldly;
 
 namespace Dotnet.CQRS.Application.Tests.Employees.Queries.GetById;
 
-public class When_Ok
+public class When_NotFound
 {
     [Fact]
     public async Task Then_Ok()
@@ -22,22 +22,20 @@ public class When_Ok
         const int employeeId = 42;
         employeeRepository
             .Setup(e => e.SingleOrDefaultAsync(It.IsAny<Expression<Func<Employee, bool>>>()))
-            .ReturnsAsync(new Employee("Obiwan", "Kenobi", "obiwan@gmail.com")
-            {
-                Id = employeeId
-            });
+            .ReturnsAsync((Employee)null!);
 
         var query = new GetByIdQuery(employeeId);
         var handler = fixture.Create<GetByIdQueryHandler>();
-        
+
         // Act
         var expectedResult = await handler.Handle(query, CancellationToken.None);
 
         // Assert
+        // Assert
         expectedResult.ShouldNotBeNull();
-        expectedResult.IsSuccess.ShouldBeTrue();
-        expectedResult.Status.ShouldBe(ResultStatus.Ok);
-        expectedResult.Value.Id.ShouldBe(employeeId);
+        expectedResult.IsSuccess.ShouldBeFalse();
+        expectedResult.Status.ShouldBe(ResultStatus.NotFound);
+        expectedResult.Value.ShouldBeNull();
 
     }
 }

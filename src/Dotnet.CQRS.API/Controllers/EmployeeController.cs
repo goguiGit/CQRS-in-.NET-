@@ -1,5 +1,5 @@
-using Dotnet.CQRS.Application.Employees.Queries.GetById;
-using MediatR;
+using Ardalis.Result;
+using Ardalis.Result.AspNetCore;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Dotnet.CQRS.API.Controllers;
@@ -10,14 +10,14 @@ public class EmployeeController(IMediator mediator) : ControllerBase
 {
     private readonly IMediator _mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
 
-
+    [TranslateResultToActionResult]
     [HttpGet]
     [Route("{id:int}")]
-    public async Task<ActionResult<GetByIdResponse>> GetEmployee(int id)
+    public async Task<Result<GetByIdResponse>> GetEmployee(int id)
     {
         var query = new GetByIdQuery(id);
-        var employee = await _mediator.Send(query);
-        return Ok(employee);
+        var result = await _mediator.Send(query);
+        return result;
     }
     
 }
