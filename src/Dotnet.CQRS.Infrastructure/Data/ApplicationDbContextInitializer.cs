@@ -51,11 +51,11 @@ public class ApplicationDbContextInitializer(
         // Seed employees
         var employees = new List<Employee>
         {
-            new Employee("John", "Smith", "john.smith@example.com") { Id = 1 },
-            new Employee("Jane", "Doe", "jane.doe@example.com") { Id = 2 },
-            new Employee("Alice", "Johnson", "alice.johnson@example.com") { Id = 3 },
-            new Employee("Bob", "Wilson", "bob.wilson@example.com") { Id = 4 },
-            new Employee("Charlie", "Brown", "charlie.brown@example.com") { Id = 5 }
+            new("John", "Smith", "john.smith@example.com") { Id = 1 },
+            new("Jane", "Doe", "jane.doe@example.com") { Id = 2 },
+            new("Alice", "Johnson", "alice.johnson@example.com") { Id = 3 },
+            new("Bob", "Wilson", "bob.wilson@example.com") { Id = 4 },
+            new("Charlie", "Brown", "charlie.brown@example.com") { Id = 5 }
         };
 
         _context.Employees.AddRange(employees);

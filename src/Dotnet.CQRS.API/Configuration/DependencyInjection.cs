@@ -1,6 +1,7 @@
 ﻿using System.Net;
 using Ardalis.Result;
 using Ardalis.Result.AspNetCore;
+using Dotnet.CQRS.Application.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi;
 using Dotnet.CQRS.Infrastructure.Data;
@@ -24,6 +25,7 @@ public static class DependencyInjection
         });
 
         services.AddScoped<IEmployeeRepository, EmployeeRepository>();
+        services.AddScoped<IUnitOfWork, UnitOfWork>();
         services.AddScoped<ApplicationDbContextInitializer>();
 
         return services;

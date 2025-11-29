@@ -8,7 +8,7 @@ public class Employee : EntityBase
     public string Email { get; set; }
     public bool IsActive { get; set; }
 
-    private Employee() { } // EF Core or serialization
+    public Employee() { } // EF Core or serialization
 
     public Employee(string firstName, string lastName, string email)
     {

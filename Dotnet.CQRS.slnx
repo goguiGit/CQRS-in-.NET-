@@ -18,5 +18,6 @@
   </Folder>
   <Folder Name="/04- Tests/">
     <Project Path="tests/Dotnet.CQRS.Application.Tests/Dotnet.CQRS.Application.Tests.csproj" Id="22244dbb-fae2-4a87-85e5-921eb2a5cd78" />
+    <Project Path="tests/Dotnet.CQRS.MediatR.Tests/Dotnet.CQRS.MediatR.Tests.csproj" Id="c2147d2a-05a7-4c58-be6d-47bc7a66f88e" />
   </Folder>
 </Solution>
