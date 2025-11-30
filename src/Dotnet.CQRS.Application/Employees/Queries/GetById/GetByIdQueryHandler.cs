@@ -1,8 +1,10 @@
-﻿using Dotnet.CQRS.Application.Repositories;
+﻿using Dotnet.CQRS.Abstractions;
+using MediatR;
+using Dotnet.CQRS.Application.Repositories;
 
 namespace Dotnet.CQRS.Application.Employees.Queries.GetById;
 
-public class GetByIdQueryHandler(IEmployeeRepository employeeRepository) : IQueryHandler<GetByIdQuery, Result<GetByIdResponse>>
+public class GetByIdQueryHandler(IEmployeeRepository employeeRepository) : IQueryHandler<GetByIdQuery, Result<GetByIdResponse>>, IRequestHandler<GetByIdQuery, Result<GetByIdResponse>>
 {
     private readonly IEmployeeRepository _employeeRepository = employeeRepository ?? throw new ArgumentNullException(nameof(employeeRepository));
 

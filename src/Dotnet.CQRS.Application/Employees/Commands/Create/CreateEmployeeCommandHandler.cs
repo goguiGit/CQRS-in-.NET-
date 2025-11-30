@@ -1,11 +1,13 @@
-﻿using Dotnet.CQRS.Application.Interfaces;
+﻿using Dotnet.CQRS.Abstractions;
+using MediatR;
+using Dotnet.CQRS.Application.Interfaces;
 using Dotnet.CQRS.Application.Repositories;
 using Dotnet.CQRS.Domain;
 
 namespace Dotnet.CQRS.Application.Employees.Commands.Create;
 
 public class CreateEmployeeCommandHandler(IEmployeeRepository employeeRepository, IUnitOfWork unitOfWork) 
-    : ICommandHandler<CreateEmployeeCommand, Result>
+    : ICommandHandler<CreateEmployeeCommand, Result>, IRequestHandler<CreateEmployeeCommand, Result>
 {
     private readonly IEmployeeRepository _employeeRepository = employeeRepository ?? throw new ArgumentNullException(nameof(employeeRepository));
     private readonly IUnitOfWork _unitOfWork = unitOfWork ?? throw new ArgumentNullException(nameof(unitOfWork));

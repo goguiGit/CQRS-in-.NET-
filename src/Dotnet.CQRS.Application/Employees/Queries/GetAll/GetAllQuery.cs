@@ -1,3 +1,6 @@
-﻿namespace Dotnet.CQRS.Application.Employees.Queries.GetAll;
+﻿using Dotnet.CQRS.Abstractions;
+using MediatR;
 
-public record GetAllQuery : IQuery<Result<List<GetAllResponse>>>;
+namespace Dotnet.CQRS.Application.Employees.Queries.GetAll;
+
+public record GetAllQuery : IQuery<Result<List<GetAllResponse>>>, IRequest<Result<List<GetAllResponse>>>;

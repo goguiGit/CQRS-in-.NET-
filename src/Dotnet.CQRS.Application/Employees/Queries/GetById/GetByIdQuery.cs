@@ -1,3 +1,6 @@
-﻿namespace Dotnet.CQRS.Application.Employees.Queries.GetById;
+﻿using Dotnet.CQRS.Abstractions;
+using MediatR;
 
-public record GetByIdQuery(int Id) : IQuery<Result<GetByIdResponse>>;
+namespace Dotnet.CQRS.Application.Employees.Queries.GetById;
+
+public record GetByIdQuery(int Id) : IQuery<Result<GetByIdResponse>>, IRequest<Result<GetByIdResponse>>;

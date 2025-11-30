@@ -1,3 +1,6 @@
-﻿namespace Dotnet.CQRS.Application.Employees.Commands.Create;
+﻿using Dotnet.CQRS.Abstractions;
+using MediatR;
 
-public record CreateEmployeeCommand(string FirstName, string LastName, string Email) : ICommand<Result>;
+namespace Dotnet.CQRS.Application.Employees.Commands.Create;
+
+public record CreateEmployeeCommand(string FirstName, string LastName, string Email) : ICommand<Result>, IRequest<Result>;
