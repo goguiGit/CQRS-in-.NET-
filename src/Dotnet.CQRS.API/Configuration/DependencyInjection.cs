@@ -1,11 +1,13 @@
-﻿using System.Net;
-using Ardalis.Result;
+﻿using Ardalis.Result;
 using Ardalis.Result.AspNetCore;
+using Dotnet.CQRS.Abstractions;
 using Dotnet.CQRS.Application.Interfaces;
+using Dotnet.CQRS.Infrastructure.Data;
+using Dotnet.CQRS.MediatR.Abstractions;
+using Dotnet.CQRS.MediatR.EntityFrameworkCore.Configuration;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi;
-using Dotnet.CQRS.Infrastructure.Data;
-using Dotnet.CQRS.MediatR.EntityFrameworkCore.Configuration;
+using System.Net;
 
 namespace Dotnet.CQRS.API.Configuration;
 
@@ -33,8 +35,22 @@ public static class DependencyInjection
 
     public static IServiceCollection AddApplicationServices(this IServiceCollection services)
     {
+        services.AddScoped<IRequestDispatcher, MediatorDispatcher>();
         var assembly = typeof(GetByIdQuery).Assembly;
         services.AddMediatR(cfg => { cfg.RegisterServicesFromAssembly(assembly); });
+
+        // Register CQRS handlers (query & command) without MediatR dependency
+        foreach (var type in assembly.GetTypes().Where(t => t is { IsAbstract: false, IsInterface: false }))
+        {
+            var handlerInterfaces = type.GetInterfaces()
+                .Where(i => i.IsGenericType && (i.GetGenericTypeDefinition() == typeof(IQueryHandler<,>) 
+                                                || i.GetGenericTypeDefinition() == typeof(ICommandHandler<,>)));
+
+            foreach (var hi in handlerInterfaces)
+            {
+                services.AddScoped(hi, type);
+            }
+        }
 
         services.AddTransient(typeof(IPipelineBehavior<,>), typeof(LoggingBehavior<,>));
 

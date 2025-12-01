@@ -1,5 +1,6 @@
 using Ardalis.Result;
 using Ardalis.Result.AspNetCore;
+using Dotnet.CQRS.Abstractions;
 using Dotnet.CQRS.Application.Employees.Commands.Create;
 using Dotnet.CQRS.Application.Employees.Queries.GetAll;
 using Microsoft.AspNetCore.Mvc;
@@ -8,9 +9,9 @@ namespace Dotnet.CQRS.API.Controllers;
 
 [ApiController]
 [Route("[controller]")]
-public class EmployeeController(IMediator mediator) : ControllerBase
+public class EmployeeController(IRequestDispatcher mediator) : ControllerBase
 {
-    private readonly IMediator _mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
+    private readonly IRequestDispatcher _mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
 
     [TranslateResultToActionResult]
     [HttpGet]
@@ -19,7 +20,7 @@ public class EmployeeController(IMediator mediator) : ControllerBase
     {
         var query = new GetByIdQuery(id);
         var result = await _mediator.Send(query);
-        return result;
+        return result!;
     }
     
     [HttpGet]
@@ -29,7 +30,7 @@ public class EmployeeController(IMediator mediator) : ControllerBase
     {
         var query = new GetAllQuery();
         var result = await _mediator.Send(query);
-        return result;
+        return result!;
     }
 
     [HttpPost]
@@ -38,7 +39,7 @@ public class EmployeeController(IMediator mediator) : ControllerBase
     public async Task<Result> CreateAsync([FromBody] CreateEmployeeCommand command)
     {
         var result = await _mediator.Send(command);
-        return result;
+        return result!;
     }
 }
 
